@@ -20,13 +20,13 @@ if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then
     make here
     cd /home/container/
     rm -rf byond.zip
-    source /home/container/bin/byond/byondsetup
+    source /home/container/byond/bin/byondsetup
     if [ ! -d byondServer ]; then 
        mkdir byondServer
     fi
     cd byondServer
     if [ ! -d ${ServerBaseDir} ]; then
-        git clone ${ServerGitRepo}
+        git clone ${serverGitRepo}
     fi
     cd ${ServerBaseDir}
     git pull
