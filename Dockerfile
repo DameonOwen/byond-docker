@@ -23,7 +23,7 @@ RUN         dpkg --add-architecture i386 \
             && cd byond \
             && make here \
             && cd .. \
-            && rm -rf byond.zip \
+            && rm byond.zip \
             && touch /home/container/.profile \
             && echo 'source /home/container/byond/bin/byondsetup"' >> /home/container/.profile \
             && chown container:container /home/container/.profile
