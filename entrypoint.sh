@@ -20,6 +20,7 @@ if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then
     make here
     cd /home/container/
     rm -rf byond.zip
+    source /home/container/bin/byond/byondsetup
     if [ ! -d byondServer ]; then 
        mkdir byondServer
     fi
