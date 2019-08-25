@@ -10,7 +10,7 @@ if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then
     # Update Server
     cd /home/container
     curl "http://www.byond.com/download/build/${BYOND_MAJOR_CUST}/${BYOND_MAJOR_CUST}.${BYOND_MINOR_CUST}_byond_linux.zip" -o byond.zip
-    unzip byond.zip
+    unzip -f byond.zip
     cd byond
     make here
     cd ../
