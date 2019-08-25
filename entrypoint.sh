@@ -9,6 +9,8 @@ export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then 
     # Update Server
     cd /home/container
+
+    #Get BYOND
     curl "http://www.byond.com/download/build/${BYOND_MAJOR_CUST}/${BYOND_MAJOR_CUST}.${BYOND_MINOR_CUST}_byond_linux.zip" -o byond.zip
     if [ ! -d "byond" ]; then
         unzip byond.zip
@@ -20,6 +22,8 @@ if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then
     make here
     cd /home/container/
     rm -rf byond.zip
+
+    #Get the Github repository and build
     source /home/container/byond/bin/byondsetup
     if [ ! -d byondServer ]; then 
        mkdir byondServer
@@ -31,6 +35,15 @@ if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then
     cd ${ServerBaseDir}
     git pull
     DreamMaker *.dme
+
+    #Compile RUST
+    curl https://sh.rustup.rs -sSfo rustup-init.sh
+    chmod +x rustup-init.sh
+    ./rustup-init.sh
+    cd rust-g
+    rustup override add stable-i686-unknown-linux-gnu
+    cargo build --release --features dmi,file,log,url
+    mv target/release/librust_g.so /home/container/byondServer/${ServerBaseDir}/rust_g
 else
     echo -e "not updating game server as auto update was set to 0"
 fi
