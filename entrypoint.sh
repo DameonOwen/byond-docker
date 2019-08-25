@@ -10,12 +10,21 @@ if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then
     # Update Server
     cd /home/container
     curl "http://www.byond.com/download/build/${BYOND_MAJOR_CUST}/${BYOND_MAJOR_CUST}.${BYOND_MINOR_CUST}_byond_linux.zip" -o byond.zip
-    unzip -f byond.zip
+    if [ ! -d "byond" ]; then
+        unzip byond.zip
+        grep -qxF 'source /home/container/byond/bin/byondsetup' /home/container/.profile || echo 'source /home/container/byond/bin/setup' >> /home/container/.profile
+    else
+        unzip -f byond.zip
+    fi
     cd byond
     make here
-    cd ../
+    cd /home/container/
     rm -rf byond.zip
-    cd byondServer/${ServerBaseDir}
+    cd byondServer
+    if [ ! -d "$ServerBaseDir" ]; then
+        git clone "$ServerGitRepo"
+    fi
+    cd ${ServerBaseDir}
     git pull
     DreamMaker *.dme
 else
