@@ -22,7 +22,7 @@ RUN         dpkg --add-architecture i386 \
             && unzip byond.zip \
             && cd byond \
             && sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile \
-            && make install
+            && make install \
             && cd .. \
             && rm -rf byond byond.zip
 
