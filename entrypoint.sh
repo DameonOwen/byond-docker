@@ -9,13 +9,12 @@ export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then 
     # Update Server
     cd /home/container
-    curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
+    curl "http://www.byond.com/download/build/${BYOND_MAJOR_CUST}/${BYOND_MAJOR_CUST}.${BYOND_MINOR_CUST}_byond_linux.zip" -o byond.zip
     unzip byond.zip
     cd byond
-    sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile
-    make install
+    make here
     cd ../
-    rm -rf byond byond.zip
+    rm -rf byond.zip
     cd byondServer/${ServerBaseDir}
     git pull
     DreamMaker *.dme

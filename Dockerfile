@@ -21,10 +21,12 @@ RUN         dpkg --add-architecture i386 \
             && curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip \
             && unzip byond.zip \
             && cd byond \
-            && sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile \
-            && make install \
+            && make here \
             && cd .. \
-            && rm -rf byond byond.zip
+            && rm -rf byond.zip \
+            && touch /home/container/.profile \
+            && echo 'PATH="$PATH:/home/container/byond/bin"' >> /home/container/.profile \
+            && chown container:container /home/container/.profile
 
 USER        container
 ENV         HOME /home/container
