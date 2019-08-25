@@ -9,7 +9,7 @@ LABEL       author="Pterodactyl Software" maintainer="support@pterodactyl.io"
 
 ENV         DEBIAN_FRONTEND noninteractive \
             BYOND_MAJOR=512 \
-            BYOND_MINOR=1468
+            BYOND_MINOR=1478
 
 # Install Dependencies
 RUN         dpkg --add-architecture i386 \
