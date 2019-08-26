@@ -35,15 +35,6 @@ if [  -z ${AUTO_UPDATE} ] || [ ${AUTO_UPDATE} == 1 ]; then
     cd ${ServerBaseDir}
     git pull
     DreamMaker *.dme
-
-    #Compile RUST
-    curl https://sh.rustup.rs -sSfo rustup-init.sh
-    chmod +x rustup-init.sh
-    ./rustup-init.sh
-    cd rust-g
-    rustup override add stable-i686-unknown-linux-gnu
-    cargo build --release --features dmi,file,log,url
-    mv target/release/librust_g.so /home/container/byondServer/${ServerBaseDir}/rust_g
 else
     echo -e "not updating game server as auto update was set to 0"
 fi
