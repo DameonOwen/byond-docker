@@ -28,7 +28,7 @@ jobs:
       - name: Build and Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: dameonowen/byond
+          name: dameonowen/byond/byond_${{ env.BYOND_VERSION }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: Dockerfile
