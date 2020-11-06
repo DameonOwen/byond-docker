@@ -5,7 +5,8 @@
 # ----------------------------------
 FROM        ubuntu:18.04
 
-LABEL       author="Pterodactyl Software" maintainer="support@pterodactyl.io"
+ARG BYOND_MAJOR
+ARG BYOND_MINOR
 
 ENV         DEBIAN_FRONTEND noninteractive
 ENV         BYOND_MAJOR 512
