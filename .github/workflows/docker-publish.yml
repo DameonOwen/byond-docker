@@ -25,10 +25,13 @@ jobs:
       - name: Set BYOND_MINOR
         run: echo ::set-env name=BYOND_MINOR::$(cut -d'.' -f2 <<< $BYOND_VERSION)
 
+      - name: Set BYOND_VERSION_SAFE
+        run: echo ::set-env name=BYOND_VERSION_SAFE::$(echo `echo $BYOND_MAJOR`_`echo $BYOND_MINOR`)
+
       - name: Build and Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: dameonowen/byond-docker/byond_${{ env.BYOND_VERSION }}
+          name: dameonowen/byond-docker/byond_${{ env.BYOND_VERSION_SAFE }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: Dockerfile
