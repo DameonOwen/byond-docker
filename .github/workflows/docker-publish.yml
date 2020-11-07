@@ -17,13 +17,13 @@ jobs:
         run: wget https://secure.byond.com/download/version.txt
 
       - name: Set BYOND_VERSION
-        run: echo ::set-env name=BYOND_VERSION::$(cat version.txt | awk '{$1=$1};1')
+        run: echo `BYOND_VERSION=$(cat version.txt | awk '{$1=$1};1')` >> $GITHUB_ENV
 
       - name: Set BYOND_MAJOR
-        run: echo ::set-env name=BYOND_MAJOR::$(cut -d'.' -f1 <<< $BYOND_VERSION)
+        run: echo `BYOND_MAJOR=$(cut -d'.' -f1 <<< $BYOND_VERSION)` >> $GITHUB_ENV
 
       - name: Set BYOND_MINOR
-        run: echo ::set-env name=BYOND_MINOR::$(cut -d'.' -f2 <<< $BYOND_VERSION)
+        run: echo `BYOND_MINOR-$(cut -d'.' -f2 <<< $BYOND_VERSION)` >> $GITHUB_ENV
 
       - name: Build and Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
@@ -33,6 +33,6 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
           dockerfile: Dockerfile
           buildargs: BYOND_MAJOR,BYOND_MINOR
-          cache: true
           tags: "latest,${{ env.BYOND_VERSION }}"
+          cache: true
           registry: ghcr.io
