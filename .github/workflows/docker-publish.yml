@@ -18,15 +18,13 @@ jobs:
 
       - name: Set BYOND_VERSION
         id: sbv
-        run: |
-          echo `BYOND_VERSION=$(cat version.txt | awk '{$1=$1};1')` >> $GITHUB_ENV
-          echo `::set-output name=byond_version::$(cat version.txt | awk '{$1=$1};1')`
+        run: echo "::set-output name=byond_version::$(cat version.txt | awk '{$1=$1};1')"
 
       - name: Set BYOND_MAJOR
-        run: echo `BYOND_MAJOR=$(cut -d'.' -f1 <<< $BYOND_VERSION)` >> $GITHUB_ENV
+        run: echo `BYOND_MAJOR=$(cut -d'.' -f1 <<< ${{ steps.sbv.outputs.byond_version }})` >> $GITHUB_ENV
 
       - name: Set BYOND_MINOR
-        run: echo `BYOND_MINOR-$(cut -d'.' -f2 <<< $BYOND_VERSION)` >> $GITHUB_ENV
+        run: echo `BYOND_MINOR-$(cut -d'.' -f2 <<< ${{ steps.sbv.outputs.byond_version }})` >> $GITHUB_ENV
 
       - name: Build and Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
