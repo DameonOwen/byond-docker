@@ -35,5 +35,5 @@ jobs:
           dockerfile: Dockerfile
           buildargs: BYOND_MAJOR,BYOND_MINOR
           tags: "latest,${{ steps.sbv.outputs.byond_version }}"
-          cache: false
+          cache: true
           registry: ghcr.io
