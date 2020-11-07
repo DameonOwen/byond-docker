@@ -28,11 +28,11 @@ jobs:
       - name: Build and Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: dameonowen/byond-docker/byond
+          name: dameonowen/byond
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_PAT }}
           dockerfile: Dockerfile
           buildargs: BYOND_MAJOR,BYOND_MINOR
           cache: true
           tags: "latest,${{ env.BYOND_VERSION }}"
-          registry: docker.pkg.github.com
+          registry: ghcr.io
