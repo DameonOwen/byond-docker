@@ -17,7 +17,10 @@ jobs:
         run: wget https://secure.byond.com/download/version.txt
 
       - name: Set BYOND_VERSION
-        run: echo `BYOND_VERSION=$(cat version.txt | awk '{$1=$1};1')` >> $GITHUB_ENV
+        id: sbv
+        run: |
+          echo `BYOND_VERSION=$(cat version.txt | awk '{$1=$1};1')` >> $GITHUB_ENV
+          echo `::set-output name=byond_version::$(cat version.txt | awk '{$1=$1};1')`
 
       - name: Set BYOND_MAJOR
         run: echo `BYOND_MAJOR=$(cut -d'.' -f1 <<< $BYOND_VERSION)` >> $GITHUB_ENV
@@ -33,6 +36,6 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
           dockerfile: Dockerfile
           buildargs: BYOND_MAJOR,BYOND_MINOR
-          tags: "latest,${{ env.BYOND_VERSION }}"
+          tags: "latest,${{ steps.sbv.outputs.byond_version }}"
           cache: true
           registry: ghcr.io
