@@ -29,7 +29,7 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: dameonowen/byond
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_PAT }}
           dockerfile: Dockerfile
           buildargs: BYOND_MAJOR,BYOND_MINOR
